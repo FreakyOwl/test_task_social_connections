@@ -4,6 +4,7 @@ import os
 import json
 import datetime
 import random
+import pytest
 
 import api
 
@@ -44,6 +45,8 @@ class TestApi:
             database = json.load(file)
         journal = database["journal"]
         assert journal[len(journal)-1] == new_communication
+        with pytest.raises(api.APIException):
+            server.add_communication(new_communication["time"], ["Антон Иванов", "Марат Борисов"])
 
     def test_make_graph(self):
         generate_database()
